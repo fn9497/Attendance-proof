@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from Collage.serializers import StudentSerializer
 from .models import *
 from .serializers import *
+from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
 
