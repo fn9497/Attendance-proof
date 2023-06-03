@@ -9,10 +9,7 @@ class LecturSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
         fields = '__all__'
-    
-
-
-    
+       
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
