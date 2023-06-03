@@ -16,5 +16,6 @@ class LecturSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = Attendance
-        fields = '__all__'
+        fields = ['lecture' ,'student','attend']
+        read_only_fields = ['count_attend','count_absent']
         
