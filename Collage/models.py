@@ -20,8 +20,11 @@ class department(models.Model):
 
 class Student(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    id=models.IntegerField(primary_key=True)
     level = models.IntegerField()
-    department = models.ForeignKey(department, on_delete=models.CASCADE)  
+    department = models.ForeignKey(department, on_delete=models.CASCADE)
+    picture_1 = models.ImageField(upload_to=("images/"),null=True)
+    picture_2 = models.ImageField(upload_to=("images/"),null=True) 
     
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
@@ -60,7 +63,4 @@ class StudentCourse(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     course_instance = models.ForeignKey(CourseInstance, on_delete=models.CASCADE)
-
-
-
-  
+   
