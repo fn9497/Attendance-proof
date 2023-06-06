@@ -13,7 +13,9 @@ class Lecture(models.Model):
     date = models.DateField()
     time = models.TimeField()
     week = models.IntegerField(default=1)
-    picture = models.ImageField(upload_to=("images/"),null=True)
+    picture_1 = models.ImageField(upload_to=("images/"),null=True)
+    picture_2 = models.ImageField(upload_to=("images/"),null=True)
+    picture_3 = models.ImageField(upload_to=("images/"),null=True)
     attend = models.CharField(models.CharField(max_length=100))
     absent = models.CharField(models.CharField(max_length=100))
    # attend = ArrayField(models.CharField(max_length=100))
@@ -48,16 +50,11 @@ class Attendance(models.Model):
     count_absent= models.IntegerField(default=0)
    
     def __str__(self):
-        return self.student.user.first_name + " " + str("'s attendance")
+        return self.student.user.first_name + str("'s attendance")
     
-    def save(self):
-       self.count_absent = self.lecture.week - Attendance.objects.filter(attend=self.attend).count()
+    def absent_n(self):
+        self.count_absent = self.lecture.week - Attendance.objects.filter(attend=self.attend).count()
     
 
-    def save(self):
+    def attend_n(self):
         self.count_attend = Attendance.objects.filter(attend=1).count()   
-
-
-
-    
-
