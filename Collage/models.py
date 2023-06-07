@@ -63,4 +63,5 @@ class StudentCourse(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     course = models.ForeignKey(Course, on_delete=models.CASCADE)
     course_instance = models.ForeignKey(CourseInstance, on_delete=models.CASCADE)
-   
+    def __str__(self):
+        return  self.course.name + " " + self.student.name + " " + self.course_instance.teacher.name + " " + self.student.department.name
