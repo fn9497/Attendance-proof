@@ -35,9 +35,10 @@ class CourseInstanceSerializer(serializers.ModelSerializer):
 class StudentCourseSerializer(serializers.ModelSerializer):
     course = CourseSerializer()
     course_instance = CourseInstanceSerializer()
+    Student =StudentSerializer()
     class Meta:
         model = StudentCourse
-        fields = ['course', 'course_instance']
+        fields = ['student','course', 'course_instance']
 
 
 
