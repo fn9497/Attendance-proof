@@ -18,7 +18,7 @@ class StudentSerializer(serializers.ModelSerializer):
 class LecturSerializer(serializers.ModelSerializer):
     class Meta:
         model = Lecture
-        fields = '_all_'
+        fields = '__all__'
 
 
     
