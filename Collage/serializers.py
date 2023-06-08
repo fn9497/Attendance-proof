@@ -1,5 +1,6 @@
 from rest_framework import serializers
 from .models import *
+from Core.serializer import UserSerializer
 
 
 class StudentSerializer(serializers.ModelSerializer):
@@ -9,9 +10,10 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class TeacherSerializer(serializers.ModelSerializer):
+    user=UserSerializer()  
     class Meta:
         model = Teacher
-        fields = '__all__'
+        fields = ['id','user']
 
 
 class departmentSerializer(serializers.ModelSerializer):
@@ -29,7 +31,7 @@ class CourseSerializer(serializers.ModelSerializer):
 class CourseInstanceSerializer(serializers.ModelSerializer):
     class Meta:
         model = CourseInstance
-        fields = '__all__'
+        fields = ['semester','course','teacher','department','semester','year']
 
 
 class StudentCourseSerializer(serializers.ModelSerializer):
