@@ -7,13 +7,12 @@ from rest_framework.relations import StringRelatedField
 class StudentSerializer(serializers.ModelSerializer):
     class Meta:
         model = Student
-        fields = ['id','user', 'first_name', 'last_name']
+        fields = ['id','user', 'first_name', 'last_name','department']
 
     user = StringRelatedField()
     first_name = serializers.CharField(source='user.first_name')
     last_name = serializers.CharField(source='user.last_name')
-
-
+    department = serializers.CharField()
 
 class LecturSerializer(serializers.ModelSerializer):
     class Meta:
