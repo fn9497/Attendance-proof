@@ -1,5 +1,8 @@
 from django.db import models
 from django.conf import settings
+from django.contrib.postgres.fields import ArrayField
+
+
 # Create your models here.
 class Teacher(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
@@ -23,11 +26,13 @@ class Student(models.Model):
     id=models.IntegerField(primary_key=True)
     level = models.IntegerField()
     department = models.ForeignKey(department, on_delete=models.CASCADE)
-    picture_1 = models.ImageField(upload_to=("images/"),null=True)
-    picture_2 = models.ImageField(upload_to=("images/"),null=True) 
+    #encode=ArrayField(models.CharField(max_length=100))
+    
     
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name
+    def __str__(self):
+        return self.user.username
 
 
 
