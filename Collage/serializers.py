@@ -12,11 +12,18 @@ class StudentSerializer(serializers.ModelSerializer):
 
 
 class TeacherSerializer(serializers.ModelSerializer):
-    user=UserSerializer()  
+    user = UserSerializer()
+    courses_taught = serializers.SerializerMethodField()
+
     class Meta:
         model = Teacher
-        fields = ['id','user']
+        fields = ['id', 'user', 'courses_taught']
 
+    def get_courses_taught(self, obj):
+        teacher_id = obj.id
+        courses_taught = Course.objects.filter(courseinstance__teacher_id=teacher_id)
+        course_serializer = CourseSerializer(courses_taught, many=True)
+        return course_serializer.data
 
 class departmentSerializer(serializers.ModelSerializer):
     class Meta:
