@@ -4,8 +4,9 @@ from rest_framework import viewsets
 from Collage.serializers import StudentSerializer
 from .models import *
 from .serializers import *
+from rest_framework.response import Response
+from rest_framework import status
 from django_filters.rest_framework import DjangoFilterBackend
-
 # Create your views here.
 
 
@@ -28,4 +29,3 @@ class AttendanceViewSet(viewsets.ModelViewSet):
         Attendance.objects.create(lecture=serializer.validated_data['lecture'],student=serializer.validated_data['student'],attend=serializer.validated_data['attend'])
         return Response(serializer.data, status=status.HTTP_201_CREATED)
         
-    
