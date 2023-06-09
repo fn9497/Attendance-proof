@@ -9,6 +9,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 class CourseViewSet(viewsets.ReadOnlyModelViewSet):
      queryset=Course.objects.all()
      serializer_class = StudentCourseSerializer
+   
 
 
 class StudentCourseViewSet(viewsets.ModelViewSet):
@@ -36,6 +37,9 @@ class StudentViewSet(viewsets.ModelViewSet):
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields=['user']
+
 
 
 
