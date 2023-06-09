@@ -20,7 +20,7 @@ class AttendanceViewSet(viewsets.ModelViewSet):
     queryset = Attendance.objects.all()
     serializer_class = AttendanceSerializer
     filter_backends=[DjangoFilterBackend]
-    filterset_fields=['attend','lecture']
+    filterset_fields=['attend','lecture','student']
     
     def create(self, request, *args, **kwargs):
         serializer = self.get_serializer(data=request.data)
