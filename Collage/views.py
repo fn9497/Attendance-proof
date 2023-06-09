@@ -2,6 +2,7 @@ from django.shortcuts import render
 from rest_framework import viewsets
 from .models import *
 from .serializers import *
+from django_filters.rest_framework import DjangoFilterBackend
 # Create your views here.
 
 
@@ -9,16 +10,12 @@ class CourseViewSet(viewsets.ReadOnlyModelViewSet):
      queryset=Course.objects.all()
      serializer_class = StudentCourseSerializer
 
-     def get_queryset(self):
-        student_id = self.request.user.id
-        student_course_vs = StudentCourseViewSet(student_id)
-        courses = student_course_vs.get_courses()
-        return courses
-
 
 class StudentCourseViewSet(viewsets.ModelViewSet):
     queryset = StudentCourse.objects.all()
     serializer_class = StudentCourseSerializer
+    filter_backends=[DjangoFilterBackend]
+    filterset_fields=['student']
     def get(self,request):
         student=Student.objects.get(id=self.student_id)
         return student.course.all()
@@ -39,6 +36,7 @@ class StudentViewSet(viewsets.ModelViewSet):
 class TeacherViewSet(viewsets.ModelViewSet):
     queryset = Teacher.objects.all()
     serializer_class = TeacherSerializer
+
 
 
 class departmentViewSet(viewsets.ModelViewSet):
