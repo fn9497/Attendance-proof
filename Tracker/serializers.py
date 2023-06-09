@@ -25,14 +25,33 @@ class LecturSerializer(serializers.ModelSerializer):
 class AttendanceSerializer(serializers.ModelSerializer):
     student = StudentSerializer()
     total_attendance = serializers.SerializerMethodField()
+    attendance_percentage = serializers.SerializerMethodField()
+    absent_percentage = serializers.SerializerMethodField()
     class Meta:
         model = Attendance
-        fields = ['id','student','lecture','attend','total_attendance']
+        fields = ['id', 'student', 'lecture', 'attend', 'total_attendance', 'attendance_percentage', 'absent_percentage']
 
     def get_total_attendance(self, obj):
         student = obj.student
         attend = obj.attend
-       # week=Lecture.week
+        lecture_count = Lecture.objects.filter(course_instance=obj.lecture.course_instance).count()
         attendance_count = Attendance.objects.filter(student=student, attend=attend).count()
-       # absent_percintage=100-(((attendance_count)/week)*100)
         return attendance_count
+    
+    def get_attendance_percentage(self, obj):
+        student = obj.student
+        lecture_count = Lecture.objects.filter(course_instance=obj.lecture.course_instance).count()
+        attendance_count = Attendance.objects.filter(student=student, attend=1).count()
+        if lecture_count > 0:
+            percentage = (attendance_count / lecture_count) * 100
+            return percentage
+        return 0
+
+    def get_absent_percentage(self, obj):
+        student = obj.student
+        lecture_count = Lecture.objects.filter(course_instance=obj.lecture.course_instance).count()
+        absence_count = Attendance.objects.filter(student=student, attend=0).count()
+        if lecture_count > 0:
+            percentage = (absence_count / lecture_count) * 100
+            return percentage
+        return 0
