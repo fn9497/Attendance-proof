@@ -3,6 +3,8 @@ from requests import Response
 from Collage.models import *
 from django.core.exceptions import ValidationError
 from django.contrib.postgres.fields import ArrayField
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
 
 
@@ -18,8 +20,7 @@ class Lecture(models.Model):
     picture_3 = models.ImageField(upload_to=("images/"),null=True)
     attend = models.CharField(models.CharField(max_length=100))
     absent = models.CharField(models.CharField(max_length=100))
-   # attend = ArrayField(models.CharField(max_length=100))
-    # = ArrayField(models.CharField(max_length=100))
+
 
     def validate_field_value(value):
         int("max_value")
@@ -46,15 +47,18 @@ class Attendance(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     attend = models.IntegerField(default=0)
-    count_attend= models.IntegerField(default=0)
-    count_absent= models.IntegerField(default=0)
    
     def __str__(self):
         return self.student.user.first_name + str("'s attendance")
     
-    def absent_n(self):
-        self.count_absent = self.lecture.week - Attendance.objects.filter(attend=self.attend).count()
-    
 
-    def attend_n(self):
-        self.count_attend = Attendance.objects.filter(attend=1).count()   
+
+class Notification(models.Model):
+    student = models.ForeignKey(Student, on_delete=models.CASCADE)
+    is_attendee = models.BooleanField()
+    title = models.CharField(max_length=100)
+    message = models.TextField()
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title
