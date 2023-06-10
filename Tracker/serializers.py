@@ -22,13 +22,14 @@ class LecturSerializer(serializers.ModelSerializer):
 
     
 class AttendanceSerializer(serializers.ModelSerializer):
+    lecture_week = serializers.SerializerMethodField()
     student = StudentSerializer()
     total_attendance = serializers.SerializerMethodField()
     attendance_percentage = serializers.SerializerMethodField()
     absent_percentage = serializers.SerializerMethodField()
     class Meta:
         model = Attendance
-        fields = ['id', 'student', 'lecture', 'attend', 'total_attendance', 'attendance_percentage', 'absent_percentage']
+        fields = ['id', 'student', 'lecture', 'attend', 'total_attendance', 'attendance_percentage', 'absent_percentage','lecture_week']
 
     def get_total_attendance(self, obj):
         student = obj.student
@@ -54,3 +55,11 @@ class AttendanceSerializer(serializers.ModelSerializer):
             percentage = (absence_count / lecture_count) * 100
             return percentage
         return 0
+    
+    def get_lecture_week(self, obj):
+        return obj.lecture.week
+    
+class NotificationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Notification
+        fields = '__all__'
