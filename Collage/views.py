@@ -16,7 +16,7 @@ class StudentCourseViewSet(viewsets.ModelViewSet):
     queryset = StudentCourse.objects.all()
     serializer_class = StudentCourseSerializer
     filter_backends=[DjangoFilterBackend]
-    filterset_fields=['student']
+    filterset_fields = ['student__user__username']
     def get(self,request):
         student=Student.objects.get(id=self.student_id)
         return student.course.all()
