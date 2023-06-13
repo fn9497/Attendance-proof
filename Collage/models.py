@@ -62,7 +62,7 @@ class CourseInstance(models.Model):
     year = models.IntegerField()
 
     def __str__(self):
-        return  self.course.name + " " + self.semester 
+        return  self.course.name
     
 class StudentCourse(models.Model):
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
