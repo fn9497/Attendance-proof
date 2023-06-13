@@ -15,8 +15,6 @@ class StudentSerializer(serializers.ModelSerializer):
     department = serializers.CharField()
 
 class LecturSerializer(serializers.ModelSerializer):
-    #date = serializers.DateField(required=False)
-    #time = serializers.TimeField(required=False)
     class Meta:
         model = Lecture
         fields = '__all__'
