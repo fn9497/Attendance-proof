@@ -1,3 +1,4 @@
+from datetime import date
 from django.db import models
 from requests import Response
 from Collage.models import *
@@ -12,7 +13,7 @@ from django.dispatch import receiver
 class Lecture(models.Model):
    
     course_instance = models.ForeignKey(CourseInstance, on_delete=models.CASCADE)
-    date = models.DateField(null=True, blank=True)
+    date = models.DateField(default=date.today, null=True, blank=True)
     time = models.TimeField(null=True, blank=True)
     week = models.IntegerField(default=1)
     picture_1 = models.ImageField(upload_to=("images/"),null=True)
