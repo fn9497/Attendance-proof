@@ -1,2 +1,2 @@
-# AttendAnce proof
-attendance by face recognation
+# AttendTracker
+A way to track your attendnace
