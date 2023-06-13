@@ -36,7 +36,7 @@ class Lecture(models.Model):
         serializer = self.get_serializer(Attend, many=True)
         return Response(serializer.data)
     
- 
+
     def absent(self,request):
         Absent = Student.objects.filter(Attendance.objects.attend == 0)
         serializer = self.get_serializer(Absent, many=True)
@@ -47,7 +47,6 @@ class Attendance(models.Model):
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
     student = models.ForeignKey(Student, on_delete=models.CASCADE)
     attend = models.IntegerField(default=0)
-   
     def __str__(self):
         return self.student.user.first_name + str("'s attendance")
     
